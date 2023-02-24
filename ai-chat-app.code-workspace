@@ -1,0 +1,13 @@
+{
+	"folders": [
+		{
+			"path": "."
+		}
+	],
+	"settings": {
+		"editor.guides.bracketPairs": "active",
+		"editor.formatOnPaste": true,
+		"editor.formatOnSave": true,
+		"workbench.iconTheme": "material-icon-theme"
+	}
+}
