@@ -12,9 +12,9 @@ root.render(
   <React.StrictMode>
     <ChakraProvider>
       {/* needed for react-router-dom */}
-      <BrowserRouter> 
+      {/* <BrowserRouter>  */}
         <App /> 
-      </BrowserRouter>
+      {/* </BrowserRouter> */}
     </ChakraProvider>
   </React.StrictMode>
 );
