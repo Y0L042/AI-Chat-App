@@ -1,11 +1,15 @@
 import express from "express";
 import chats from "./data/data.js";
 import dotenv from 'dotenv';
+import connectDb from "./config/db.js";
+
+// Superfluous
+import colors from 'colors';
 
 //--- App Config
 const app = express();
 dotenv.config();
-
+connectDb();
 //--- Middlewares
 
 
@@ -30,5 +34,5 @@ app.get('/api/chat/:id', (req, res) => {
 
 
 const PORT = process.env.PORT || 5000; // .env variable PORT not working
-app.listen(PORT, console.log(`Server started on PORT ${PORT}`));
+app.listen(PORT, console.log(`Server started on PORT ${PORT}`.yellow.bold));
 
