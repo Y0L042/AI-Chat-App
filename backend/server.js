@@ -3,6 +3,7 @@ import chats from "./data/data.js";
 import dotenv from 'dotenv';
 import connectDb from "./config/db.js";
 import userRoutes from "./routes/userRoutes.js";
+import { notFound, errorHandler } from "./middleware/errorMiddleware.js";
 
 // Superfluous
 import colors from 'colors';
@@ -19,11 +20,18 @@ app.use(express.json()); // to accept JSON data
 
 
 //--- API endpoints
+
+	// endpoints gets called in sequence
+
 app.get('/', (req, res) => {
 	res.send("API is running"); //This sends an HTTP response back to the client
 });
 
 app.use('/api/user', userRoutes);
+
+// Error handling middleware
+app.use(notFound); // handles not found errors
+app.use(errorHandler); // catches all other error codes
 
 
 const PORT = process.env.PORT || 5000; // .env variable PORT not working
