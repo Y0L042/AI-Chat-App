@@ -9,7 +9,9 @@ const Login = () => {
 	const handleClick = () => setShow(!show);
 	const postDetails = (pictures) => {};
 
-	const submitHandler = () => {};
+	const submitHandler = () => {
+		
+	};
 
   return (
     <VStack spacing={'5px'}>
