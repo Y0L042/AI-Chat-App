@@ -62,26 +62,26 @@ const Signup = () => {
   const submitHandler = async() => {
     setLoading(true);
     if (!name || !email || !password ||!confirmpassword){
-        toast({
-          title: 'Please fill in all fields',
-          status: 'warning',
-          duration: 3500,
-          isClosable: true,
-          position: "bottom",
-        });
-        setLoading(false);
-        return;
+      toast({
+        title: 'Please fill in all fields',
+        status: 'warning',
+        duration: 3500,
+        isClosable: true,
+        position: "bottom",
+      });
+      setLoading(false);
+      return;
     }
 
     if (password !== confirmpassword){
-        toast({
-          title: 'Passwords do not match',
-          status: 'warning',
-          duration: 3500,
-          isClosable: true,
-          position: "bottom",
-        });
-        return;
+      toast({
+        title: 'Passwords do not match',
+        status: 'warning',
+        duration: 3500,
+        isClosable: true,
+        position: "bottom",
+      });
+      return;
     }
 
     try {
@@ -103,15 +103,15 @@ const Signup = () => {
       setLoading(false);
       navigate.push('/chats');
     } catch (error) {
-        toast({
-          title: 'Error occured',
-          description: error.response.data.message,
-          status: 'error',
-          duration: 3500,
-          isClosable: true,
-          position: "bottom",
-        });
-        setLoading(false);
+      toast({
+        title: 'Error occured',
+        description: error.response.data.message,
+        status: 'error',
+        duration: 3500,
+        isClosable: true,
+        position: "bottom",
+      });
+      setLoading(false);
     }
   };
 
