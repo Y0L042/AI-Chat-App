@@ -13,10 +13,11 @@ export const accessChat = asyncHandler(async (req, res) => {
 
   var isChat = await Chat.find({
     isGroupChat: false,
-    $and: [
-      { users: { $elemMatch: { $eq: req.user._id } } },
-      { users: { $elemMatch: { $eq: userId } } },
-    ],
+    // $and: [
+    //   { users: { $elemMatch: { $eq: req.user._id } } },
+    //   { users: { $elemMatch: { $eq: userId } } },
+    // ],
+    $all: [req.user._id, userId], // recommended in comments section
   })
     .populate("users", "-password")
     .populate("latestMessage");
@@ -104,5 +105,28 @@ export const createGroupChat = asyncHandler(async (req, res) => {
   } catch (error) {
     res.status(400);
     throw new Error(error.message);
+  }
+});
+
+export const renameGroup = asyncHandler(async (req, res) => {
+  const { chatId, chatName } = req.body;
+
+  const updatedChat = await Chat.findByIdAndUpdate(
+    chatId,
+    {
+      chatName,
+    },
+    {
+      new: true,
+    }
+  )
+    .populate("users", "-password")
+    .populate("groupAdmin", "-password");
+
+  if (!updatedChat) {
+    res.status(404);
+    throw new Error("Chat not found");
+  } else {
+    res.json(updatedChat);
   }
 });
