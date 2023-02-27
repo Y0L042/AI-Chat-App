@@ -3,6 +3,7 @@ import chats from "./data/data.js";
 import dotenv from 'dotenv';
 import connectDb from "./config/db.js";
 import userRoutes from "./routes/userRoutes.js";
+import chatRoutes from "./routes/chatRoutes.js";
 import { notFound, errorHandler } from "./middleware/errorMiddleware.js";
 
 // Superfluous
@@ -28,6 +29,7 @@ app.get('/', (req, res) => {
 });
 
 app.use('/api/user', userRoutes);
+app.use('/api/chat', chatRoutes);
 
 // Error handling middleware
 app.use(notFound); // handles not found errors
