@@ -8,6 +8,8 @@
 		"editor.guides.bracketPairs": "active",
 		"editor.formatOnPaste": true,
 		"editor.formatOnSave": true,
-		"workbench.iconTheme": "material-icon-theme"
+		"workbench.iconTheme": "material-icon-theme",
+		"prettier.tabWidth": 4,
+		"prettier.useTabs": true
 	}
 }

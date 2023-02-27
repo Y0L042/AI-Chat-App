@@ -31,7 +31,7 @@ export const accessChat = asyncHandler(async (req, res) => {
     res.send(isChat[0]);
   } else {
     var chatData = {
-      chatName: "sender",
+      chatName: "personalChat",
       isGroupChat: false,
       users: [req.user._id, userId],
     };
@@ -68,6 +68,39 @@ export const fetchChats = asyncHandler(async (req, res) => {
 
         res.status(200).send(results);
       });
+  } catch (error) {
+    res.status(400);
+    throw new Error(error.message);
+  }
+});
+
+export const createGroupChat = asyncHandler(async (req, res) => {
+  if (!req.body.users || !req.body.name) {
+    return res.status(400).send({ message: "Please fill all the fields" });
+  }
+
+  var users = JSON.parse(req.body.users);
+
+  // usually groups must be bigger than 2 people, but I want to have "empty" groups
+  if (users.length < 0) {
+    return res.status(400).send("Group may not be empty");
+  }
+
+  users.push(req.user);
+
+  try {
+    const groupChat = await Chat.create({
+      chatName: req.body.name,
+      users: users,
+      isGroupChat: true,
+      groupAdmin: req.user,
+    });
+
+    const fullGroupChat = await Chat.findOne({ _id: groupChat._id })
+      .populate("users", "-password")
+      .populate("groupAdmin", "-password");
+
+    res.status(200).json(fullGroupChat);
   } catch (error) {
     res.status(400);
     throw new Error(error.message);
