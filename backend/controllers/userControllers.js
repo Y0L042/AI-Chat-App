@@ -37,6 +37,25 @@ export const registerUser = asyncHandler(async (req, res) => {
 	}
 });
 
+//  /api/user?search=user - a method for searching for users
+export const allUsers = asyncHandler(async(req, res) => {
+	// take request from query
+	// if query, search mongodb documents. else do nothing
+	// TODO remove email search
+	const keyword = req.query.search ? {
+		$or: [
+			{ name: { $regex: req.query.search, $options: "i"}},
+			{ email: { $regex: req.query.search, $options: "i"}},
+		]
+	} : {};
+	
+	// search for every other user except the user that is currently logged in
+	// needs json web token to get logged in user see ./middleware/auth
+	const users = await User.find(keyword).find({_id: {$ne: req.user._id}});
+	res.send(users);
+});
+
+
 // authenticates the user (logs them in)
 export const authUser = asyncHandler(async(req, res) => {
 	const { email, password } = req.body;
